@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem
 from PyQt6.QtGui import QAction
 from insert_dialog import InsertDialog
+from db_queries import DB_FILE, display_query
 import sqlite3
 
 
@@ -36,8 +37,8 @@ class MainWindow(QMainWindow):
         """
         Reads student data from a database and displays it in the main window table
         """
-        connection = sqlite3.connect("database.db")
-        result = connection.execute("SELECT * FROM students")
+        connection = sqlite3.connect(DB_FILE)
+        result = connection.execute(display_query)
         self.table.setRowCount(0)
         for row_number, row_data in enumerate(result):
             self.table.insertRow(row_number)
@@ -46,6 +47,9 @@ class MainWindow(QMainWindow):
         connection.close()
 
     def insert(self):
+        """
+        Opens a dialog box to allow the user to register a new student
+        """
         dialog = InsertDialog()
         dialog.exec()
 
