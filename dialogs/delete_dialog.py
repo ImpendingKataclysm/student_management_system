@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QDialog, QGridLayout, QLabel, QPushButton
+from PyQt6.QtWidgets import QDialog, QGridLayout, QLabel, QPushButton, QMessageBox
 from db_queries import DB_FILE, delete_query
 import sqlite3
 
@@ -25,12 +25,32 @@ class DeleteDialog(QDialog):
         self.setLayout(layout)
 
         yes.clicked.connect(self.delete_student)
+        no.clicked.connect(self.abort_delete)
 
     def delete_student(self):
+        """
+        Delete selected student record from the database
+        """
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
         cursor.execute(delete_query, (self.student_id, ))
         connection.commit()
         cursor.close()
         connection.close()
+        self.close()
+
+        # Success message
+        confirmation_widget = QMessageBox()
+        confirmation_widget.setWindowTitle("Success")
+        confirmation_widget.setText(f"Deleted record for {self.student_name}")
+        confirmation_widget.exec()
+
+    def abort_delete(self):
+        """
+        Exits delete dialog without deleting selected record
+        """
+        exit_message = QMessageBox()
+        exit_message.setWindowTitle("Exit")
+        exit_message.setText(f"Record for {self.student_name} has not been deleted")
+        exit_message.exec()
         self.close()
