@@ -114,8 +114,14 @@ class MainWindow(QMainWindow):
         self.status_bar.addWidget(delete_button)
 
     def edit(self):
-        dialog = EditDialog()
+        index = self.table.currentRow()
+        student_id = self.table.item(index, 0).text()
+        student_name = self.table.item(index, 1).text()
+        student_course = self.table.item(index, 2).text()
+        student_phone = self.table.item(index, 3).text()
+        dialog = EditDialog(student_id, student_name, student_course, student_phone)
         dialog.exec()
+        self.load_data()
 
     def delete(self):
         dialog = DeleteDialog()
