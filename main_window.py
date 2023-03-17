@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem
 from PyQt6.QtGui import QAction
 from insert_dialog import InsertDialog
+from search_dialog import SearchDialog
 from db_queries import DB_FILE, display_query
 import sqlite3
 
@@ -19,6 +20,7 @@ class MainWindow(QMainWindow):
 
         file_menu_item = self.menuBar().addMenu("&File")
         help_menu_item = self.menuBar().addMenu("&Help")
+        edit_menu_item = self.menuBar().addMenu("&Edit")
 
         add_student_action = QAction("Add Student", self)
         add_student_action.triggered.connect(self.insert)
@@ -26,6 +28,10 @@ class MainWindow(QMainWindow):
 
         about_action = QAction("About", self)
         help_menu_item.addAction(about_action)
+
+        edit_action = QAction("Search", self)
+        edit_action.triggered.connect(self.search)
+        edit_menu_item.addAction(edit_action)
 
         self.table = QTableWidget()
         self.table.setColumnCount(4)
@@ -48,9 +54,16 @@ class MainWindow(QMainWindow):
 
     def insert(self):
         """
-        Opens a dialog box to allow the user to register a new student
+        Opens a dialog box to register a new student
         """
         dialog = InsertDialog()
         dialog.exec()
         self.load_data()
 
+    def search(self):
+        """
+        Opens a dialog box to search for a student
+        """
+        dialog = SearchDialog()
+        dialog.exec()
+        self.load_data()

@@ -5,13 +5,18 @@ from db_queries import DB_FILE, add_query
 
 
 class InsertDialog(QDialog):
+    """
+    A dialog box for adding new students to a database. Contains input fields
+    for the student's name and phone number and a dropdown list of courses from
+    which to select.
+    """
     def __init__(self):
         super().__init__()
         window_side_len = 300
-        self.setWindowTitle("Insert Student Data")
+        self.setWindowTitle("Add New Student")
         self.setFixedWidth(window_side_len)
         self.setFixedHeight(window_side_len)
-        
+
         layout = QVBoxLayout()
 
         # Add student name
