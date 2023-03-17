@@ -51,3 +51,4 @@ class InsertDialog(QDialog):
         connection.commit()
         cursor.close()
         connection.close()
+        self.close()

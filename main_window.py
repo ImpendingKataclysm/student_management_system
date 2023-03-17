@@ -52,4 +52,5 @@ class MainWindow(QMainWindow):
         """
         dialog = InsertDialog()
         dialog.exec()
+        self.load_data()
 
