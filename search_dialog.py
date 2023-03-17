@@ -30,6 +30,10 @@ class SearchDialog(QDialog):
         self.setLayout(layout)
 
     def search(self):
+        """
+        Searches the database for students by name
+        :return: the name entered by the user into the search field
+        """
         name = self.student_name.text().title()
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
