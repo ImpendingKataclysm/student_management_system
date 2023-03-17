@@ -114,6 +114,9 @@ class MainWindow(QMainWindow):
         self.status_bar.addWidget(delete_button)
 
     def edit(self):
+        """
+        Update the student record with new information entered by the user
+        """
         index = self.table.currentRow()
         student_id = self.table.item(index, 0).text()
         student_name = self.table.item(index, 1).text()
@@ -124,5 +127,12 @@ class MainWindow(QMainWindow):
         self.load_data()
 
     def delete(self):
-        dialog = DeleteDialog()
+        """
+        Delete the record selected by the user
+        """
+        index = self.table.currentRow()
+        student_id = self.table.item(index, 0).text()
+        student_name = self.table.item(index, 1).text()
+        dialog = DeleteDialog(student_id, student_name)
         dialog.exec()
+        self.load_data()
