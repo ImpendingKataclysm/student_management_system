@@ -1,8 +1,10 @@
 from PyQt6.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem
 from PyQt6.QtGui import QAction
+from PyQt6.QtCore import Qt
 from insert_dialog import InsertDialog
 from search_dialog import SearchDialog
 from db_queries import DB_FILE, display_query
+
 import sqlite3
 
 
@@ -66,4 +68,8 @@ class MainWindow(QMainWindow):
         """
         dialog = SearchDialog()
         dialog.exec()
-        self.load_data()
+        name = dialog.search()
+        items = self.table.findItems(name, Qt.MatchFlag.MatchFixedString)
+        for item in items:
+            print(item)
+            self.table.item(item.row(), 1).setSelected(True)
