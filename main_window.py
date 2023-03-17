@@ -1,8 +1,11 @@
-from PyQt6.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem, QToolBar
+from PyQt6.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem, QToolBar, \
+     QStatusBar, QPushButton
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtCore import Qt
-from insert_dialog import InsertDialog
-from search_dialog import SearchDialog
+from dialogs.insert_dialog import InsertDialog
+from dialogs.search_dialog import SearchDialog
+from dialogs.delete_dialog import DeleteDialog
+from dialogs.edit_dialog import EditDialog
 from db_queries import DB_FILE, display_query
 
 import sqlite3
@@ -21,6 +24,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Student Management System")
         self.setMinimumSize(800, 600)
 
+        # Menu Elements
         file_menu_item = self.menuBar().addMenu("&File")
         help_menu_item = self.menuBar().addMenu("&Help")
         edit_menu_item = self.menuBar().addMenu("&Edit")
@@ -36,17 +40,26 @@ class MainWindow(QMainWindow):
         search_action.triggered.connect(self.search)
         edit_menu_item.addAction(search_action)
 
+        # Display Table
         self.table = QTableWidget()
         self.table.setColumnCount(4)
         self.table.setHorizontalHeaderLabels(("Id", "Name", "Course", "Phone"))
         self.table.verticalHeader().setVisible(False)
         self.setCentralWidget(self.table)
 
+        # Toolbar Elements
         toolbar = QToolBar()
         toolbar.setMovable(True)
         self.addToolBar(toolbar)
         toolbar.addAction(add_student_action)
         toolbar.addAction(search_action)
+
+        # Status Bar Elements
+        self.status_bar = QStatusBar()
+        self.setStatusBar(self.status_bar)
+
+        # Detect when cell is clicked
+        self.table.cellClicked.connect(self.cell_clicked)
 
     def load_data(self):
         """
@@ -80,3 +93,30 @@ class MainWindow(QMainWindow):
         for item in items:
             print(item)
             self.table.item(item.row(), 1).setSelected(True)
+
+    def cell_clicked(self):
+        """
+        Adds buttons for editing and deleting student records to the status bar
+        when a cell in the student table is clicked
+        """
+        edit_button = QPushButton("Edit Record")
+        edit_button.clicked.connect(self.edit)
+
+        delete_button = QPushButton("Delete Record")
+        delete_button.clicked.connect(self.delete)
+
+        buttons = self.findChildren(QPushButton)
+        if buttons:
+            for button in buttons:
+                self.status_bar.removeWidget(button)
+
+        self.status_bar.addWidget(edit_button)
+        self.status_bar.addWidget(delete_button)
+
+    def edit(self):
+        dialog = EditDialog()
+        dialog.exec()
+
+    def delete(self):
+        dialog = DeleteDialog()
+        dialog.exec()

@@ -6,7 +6,7 @@ from db_queries import DB_FILE, add_query
 
 class InsertDialog(QDialog):
     """
-    A dialog box for adding new students to a database. Contains input fields
+    A dialog box for adding new student records to a database. Contains input fields
     for the student's name and phone number and a dropdown list of courses from
     which to select.
     """
