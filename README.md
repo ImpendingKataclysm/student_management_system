@@ -1,5 +1,5 @@
 # student_management_system
- A desktop PyQt6 GUI app for managing university student data with an SQLite database backend.
+ A desktop PyQt6 GUI app for managing university student data with a MySQL database backend.
 
 # Program Features
 - View (ID, Name, Course, Phone Number)
