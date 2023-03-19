@@ -6,6 +6,7 @@ from dialogs.insert_dialog import InsertDialog
 from dialogs.search_dialog import SearchDialog
 from dialogs.delete_dialog import DeleteDialog
 from dialogs.edit_dialog import EditDialog
+from dialogs.about_dialogue import AboutDialog
 from db_queries import DB_FILE, display_query
 
 import sqlite3
@@ -34,6 +35,7 @@ class MainWindow(QMainWindow):
         file_menu_item.addAction(add_student_action)
 
         about_action = QAction("About", self)
+        about_action.triggered.connect(self.about)
         help_menu_item.addAction(about_action)
 
         search_action = QAction(QIcon("icons/search.png"), "Search", self)
@@ -136,3 +138,10 @@ class MainWindow(QMainWindow):
         dialog = DeleteDialog(student_id, student_name)
         dialog.exec()
         self.load_data()
+
+    def about(self):
+        """
+        Displays some information about the program
+        """
+        dialog = AboutDialog()
+        dialog.exec()

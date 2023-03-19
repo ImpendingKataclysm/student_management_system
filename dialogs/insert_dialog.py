@@ -46,7 +46,7 @@ class InsertDialog(QDialog):
         """
         Add new student information to the database
         """
-        name = self.student_name.text()
+        name = self.student_name.text().title()
         course = self.course_name.itemText(self.course_name.currentIndex())
         mobile = self.phone_number.text()
         connection = sqlite3.connect(DB_FILE)
