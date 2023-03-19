@@ -1,6 +1,5 @@
 from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLineEdit, QComboBox, QPushButton
-from db_queries import DB_FILE, update_query
-import sqlite3
+from database import Database
 
 
 class EditDialog(QDialog):
@@ -47,9 +46,10 @@ class EditDialog(QDialog):
         """
         Update an existing student record
         """
-        connection = sqlite3.connect(DB_FILE)
+        db = Database()
+        connection = db.connect()
         cursor = connection.cursor()
-        cursor.execute(update_query,
+        cursor.execute(db.update_query,
                        (self.student_name.text(),
                         self.course_name.currentText(),
                         self.phone_number.text(),

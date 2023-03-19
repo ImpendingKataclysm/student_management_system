@@ -1,6 +1,0 @@
-DB_FILE = "database.db"
-display_query = "SELECT * FROM students"
-add_query = "INSERT INTO students (name, course, mobile) VALUES (?,?,?)"
-search_query = "SELECT * FROM students WHERE name = ?"
-update_query = "UPDATE students SET name = ?, course = ?, mobile = ? WHERE id = ?"
-delete_query = "DELETE FROM students WHERE id = ?"

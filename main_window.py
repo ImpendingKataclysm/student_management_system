@@ -7,9 +7,7 @@ from dialogs.search_dialog import SearchDialog
 from dialogs.delete_dialog import DeleteDialog
 from dialogs.edit_dialog import EditDialog
 from dialogs.about_dialogue import AboutDialog
-from db_queries import DB_FILE, display_query
-
-import sqlite3
+from database import Database
 
 
 class MainWindow(QMainWindow):
@@ -67,8 +65,9 @@ class MainWindow(QMainWindow):
         """
         Reads student data from a database and displays it in the main window table
         """
-        connection = sqlite3.connect(DB_FILE)
-        result = connection.execute(display_query)
+        db = Database()
+        connection = db.connect()
+        result = connection.execute(db.display_query)
         self.table.setRowCount(0)
         for row_number, row_data in enumerate(result):
             self.table.insertRow(row_number)

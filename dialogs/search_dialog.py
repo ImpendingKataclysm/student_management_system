@@ -1,6 +1,4 @@
-import sqlite3
-
-from db_queries import DB_FILE, search_query
+from database import Database
 from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLineEdit, QPushButton
 
 
@@ -34,10 +32,11 @@ class SearchDialog(QDialog):
         Searches the database for students by name
         :return: the name entered by the user into the search field
         """
+        db = Database()
         name = self.student_name.text().title()
-        connection = sqlite3.connect(DB_FILE)
+        connection = db.connect()
         cursor = connection.cursor()
-        result = cursor.execute(search_query, (name, ))
+        result = cursor.execute(db.search_query, (name, ))
         rows = list(result)
 
         cursor.close()
